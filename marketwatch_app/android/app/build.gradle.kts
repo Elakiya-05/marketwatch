@@ -49,3 +49,7 @@ kotlin {
 flutter {
     source = "../.."
 }
+
+dependencies {
+    implementation("org.tensorflow:tensorflow-lite-select-tf-ops:+")
+}

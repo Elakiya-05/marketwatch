@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 
 /// A robust backend service for running sentiment analysis via a TFLite model.
@@ -15,12 +16,12 @@ class AIService {
   Future<void> loadModel() async {
     try {
       // Initialize the interpreter with the model from assets.
-      // The path must match exactly what is declared in pubspec.yaml.
-      _interpreter = await Interpreter.fromAsset('../assets/model.tflite');
+      final assetData = await rootBundle.load('assets/model.tflite');
+      _interpreter = Interpreter.fromBuffer(assetData.buffer.asUint8List());
       
       // Optionally configure interpreter options for production (e.g., multithreading)
       // var options = InterpreterOptions()..threads = 2;
-      // _interpreter = await Interpreter.fromAsset('../assets/model.tflite', options: options);
+      // _interpreter = await Interpreter.fromAsset('assets/model.tflite', options: options);
 
       debugPrint('AIService: TFLite model loaded successfully.');
       
